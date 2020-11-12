@@ -1,0 +1,41 @@
+/* pages/user/user.wxss */
+.user-info{
+  display: flex;
+  height: 150rpx;
+  border:1px solid #ccc;
+  border-left: none;
+  border-right: none;
+  align-items: center;
+}
+.user-info image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 10px;
+}
+.user-info text {
+  margin-left: 10px;
+}
+.user-info button{
+  margin: 0;
+  margin-left: 10rpx;
+  background-color: lawngreen;
+}
+
+.user-list{
+  margin-top: 40rpx;
+}
+.user-list-item{
+  display: flex;
+  height: 50rpx;
+  border: 1px solid #ccc;
+  border-top: none;
+  padding: 10rpx;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: lightcyan; */
+}
+.user-list-item text{
+  margin-left: 20rpx;
+}

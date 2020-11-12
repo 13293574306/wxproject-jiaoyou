@@ -1,0 +1,20 @@
+/* pages/detail/detail.wxss */
+button{
+  background-color: orange;
+}
+.detail-item{
+  display: flex;
+  margin: 2rpx;
+  border-bottom: 1px solid #ccc;
+  padding: 20rpx;
+  align-items: center;
+}
+.detail-item image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+
+.detail-phoneNumber, .detail-weixinNumber{
+  margin-right: 15rpx;
+}

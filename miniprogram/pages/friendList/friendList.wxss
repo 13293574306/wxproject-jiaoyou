@@ -1,0 +1,21 @@
+
+.friendList{
+  margin-top: 40rpx;
+}
+.friendList-item{
+  height: 120rpx;
+  border-bottom: 1px solid #ccc;
+  padding: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.friendList-item view{
+  display: flex;
+  align-items: center;
+}
+.friendList-item image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}

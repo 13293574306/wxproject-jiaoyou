@@ -1,0 +1,177 @@
+// pages/near/near.js
+
+const app = getApp()
+const db = wx.cloud.database()
+const _ = db.command
+
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    longitude: '',
+    latitude: '',
+    markers: []
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    this.getLocation();
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.getLocation();
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+
+  getLocation() {
+
+    // 这个写法有错误 显示Cannot read property 'setData' of undefined的错误，这个错误是this的指向问题
+        // wx.getLocation({
+        //   type: 'gcj02 ',
+        //   success (res) {
+        //     const latitude = res.latitude
+        //     const longitude = res.longitude
+        //     this.setData({
+        //       latitude,
+        //       longitude
+        //     })
+        //   }
+        //  })
+
+    // 解决方法一：
+        // var that = this
+        // wx.getLocation({
+        //   type: 'gcj02',
+        //   success(res) {
+        //     const latitude = res.latitude
+        //     const longitude = res.longitude
+        //     that.setData({
+        //       latitude,
+        //       longitude
+        //     })
+        //   }
+        // })
+
+    // 解决方法二：  success 这边使用箭头函数
+        wx.getLocation({
+          type: 'gcj02',
+          success: (res) => {
+            const latitude = res.latitude
+            const longitude = res.longitude
+            this.setData({
+              latitude, // 纬度
+              longitude  // 经度
+            });
+            this.getNearUsers();
+          }
+        })
+  },
+  getNearUsers() {
+    db.collection('users').where({
+      location: _.geoNear({
+        geometry: db.Geo.Point(this.data.longitude, this.data.latitude),
+        minDistance: 0,
+        maxDistance: 5000
+      }),
+      isLocation: true
+    }).field({
+      longitude: true,
+      latitude: true,
+      userPhoto: true
+    }).get().then((res)=>{
+      // console.log( res.data )
+      let data = res.data;
+      let result = [];
+      if (data.length) {
+        for (let i=0; i<data.length; i++){
+          if (data[i].userPhoto.includes('cloud://')) {
+            wx.cloud.getTempFileURL({
+              fileList: [ data[i].userPhoto ],
+              success: res => {
+                // console.log(res.fileList)
+                result.push({
+                  iconPath: res.fileList[0].tempFileURL,
+                  id: data[i]._id,
+                  latitude: data[i].latitude,
+                  longitude: data[i].longitude,
+                  width: 30,
+                  height: 30
+                });
+                this.setData({
+                  markers: result
+                })
+              }
+            })
+          } else {
+            result.push({
+              iconPath: data[i].userPhoto,
+              id: data[i]._id,
+              latitude: data[i].latitude,
+              longitude: data[i].longitude,
+              width: 30,
+              height: 30
+            });
+          }
+        }
+        this.setData({
+          markers: result
+        })
+      }
+    })
+  },
+
+  markertap(ev) {
+    // console.log(ev);
+    wx.navigateTo({
+      url: '/pages/detail/detail?userId' + ev.markerId,
+    })
+  }
+})

@@ -1,0 +1,17 @@
+/* pages/editUserInfo/editUserInfo.wxss */
+.editUserInfo{
+  margin-top: 40rpx;
+}
+.editUserInfo-list-item{
+  display: flex;
+  height: 50rpx;
+  border-bottom: 1px solid #ccc;
+  padding: 10rpx;
+  align-items: center;
+  justify-content: space-between;
+}
+.editUserInfo-list-tips{
+  font-size: 12px;
+  color: red;
+  margin-left: 12px;
+}

@@ -1,0 +1,15 @@
+
+button{
+  background-color: orange;
+}
+.btn1 {
+  margin-top: 10rpx;
+}
+input{
+  border: 1px solid #b4b5b6;
+  width: 60%;
+  height: 30px;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  box-shadow: lightskyblue 0px 0px 2px 2px;
+}

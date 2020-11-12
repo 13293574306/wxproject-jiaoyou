@@ -1,0 +1,67 @@
+
+<wxs src="../../utils/wordSplit.wxs" module="m1"></wxs>
+<wxs src="../../utils/unitFomat.wxs" module="m2"></wxs>
+
+<search />
+
+<view class="index">
+  <swiper class="index-swiper" 
+  indicator-dots="{{true}}" 
+  autoplay="{{true}}"
+  circular="{{true}}"
+  >
+    <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+      <swiper-item>
+        <image mode="aspectFill" src="{{item}}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <view class="index-tab">
+    <view class="{{ current == 'links' ? 'active' : '' }}" data-current="links" bindtap="handleCurrent">推荐</view>
+    <view class="{{ current == 'time' ? 'active' : '' }}" data-current="time" bindtap="handleCurrent">最新</view>
+  </view>
+
+  <view class="index-list">
+    <view class="index-list-item" wx:for="{{ listData }}" wx:key="{{ index }}">
+      <image mode="aspectFill" src="{{ item.userPhoto }}" data-id="{{ item._id }}" bindtap="handleDetail"></image>
+      <view class="index-list-text">
+        <text>{{ m1.wordSplit(item.nickName) }}</text>
+        <text data-id="{{ item._id }}" bindtap="handleLinks">
+          <text class="iconfont icon-zan"></text>
+          <text>{{ m2.unitFomat(item.links) }}</text>
+        </text>
+      </view>
+    </view>
+    <!-- <view class="index-list-item">
+      <image mode="aspectFill" src="https://images1.jyimg.com/w4/register/i/landing_page_new/photo/93_20121126111652727_s.jpg"></image>
+      <view class="index-list-text">
+        <text>小哈哈</text>
+        <text>
+          <text class="iconfont icon-zan"></text>
+          <text>521</text>
+        </text>
+      </view>
+    </view>
+    <view class="index-list-item">
+      <image mode="aspectFill" src="https://images1.jyimg.com/w4/register/i/landing_page_new/photo/93_20121126111652727_s.jpg"></image>
+      <view class="index-list-text">
+        <text>小欢欢</text>
+        <text>
+          <text class="iconfont icon-zan"></text>
+          <text>522</text>
+        </text>
+      </view>
+    </view>
+    <view class="index-list-item">
+      <image mode="aspectFill" src="https://images1.jyimg.com/w4/register/i/landing_page_new/photo/93_20121126111652727_s.jpg"></image>
+      <view class="index-list-text">
+        <text>小噔噔</text>
+        <text>
+          <text class="iconfont icon-zan"></text>
+          <text>523</text>
+        </text>
+      </view>
+    </view> -->
+  </view>
+</view>
